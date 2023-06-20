@@ -131,14 +131,43 @@ function updateGrayColors() {
 }
 
 sliderK1.oninput = function() {
+    let value1 = parseFloat(sliderK1.value);
+    let value2 = parseFloat(sliderK2.value);
+    let value3 = parseFloat(sliderK3.value);
+    let total = value1 + value2 + value3;
+
+    // Adjust other two sliders value proportional to their current value
+    sliderK2.value = value2 * (1 - value1) / (total - value1);
+    sliderK3.value = value3 * (1 - value1) / (total - value1);
+
     updateMonoChrome();
     updateGrayColors();
 };
+
 sliderK2.oninput = function() {
+    let value1 = parseFloat(sliderK1.value);
+    let value2 = parseFloat(sliderK2.value);
+    let value3 = parseFloat(sliderK3.value);
+    let total = value1 + value2 + value3;
+
+    // Adjust other two sliders value proportional to their current value
+    sliderK1.value = value1 * (1 - value2) / (total - value2);
+    sliderK3.value = value3 * (1 - value2) / (total - value2);
+
     updateMonoChrome();
     updateGrayColors();
 };
+
 sliderK3.oninput = function() {
+    let value1 = parseFloat(sliderK1.value);
+    let value2 = parseFloat(sliderK2.value);
+    let value3 = parseFloat(sliderK3.value);
+    let total = value1 + value2 + value3;
+
+    // Adjust other two sliders value proportional to their current value
+    sliderK1.value = value1 * (1 - value3) / (total - value3);
+    sliderK2.value = value2 * (1 - value3) / (total - value3);
+
     updateMonoChrome();
     updateGrayColors();
 };
@@ -146,3 +175,4 @@ sliderK3.oninput = function() {
 updateMonoChrome();
 generateColorBlocks();
 updateGrayColors();
+
