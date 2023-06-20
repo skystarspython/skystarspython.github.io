@@ -91,4 +91,58 @@ sliderK1.oninput = updateMonoChrome;
 sliderK2.oninput = updateMonoChrome;
 sliderK3.oninput = updateMonoChrome;
 
+var randomColors = document.getElementById("randomColors");
+var grayColors = document.getElementById("grayColors");
+var randomColorBlocks = [];
+
+function generateRandomColor() {
+    return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+}
+
+function generateColorBlocks() {
+    randomColors.innerHTML = '';
+    grayColors.innerHTML = '';
+    for (let i = 0; i < 20; i++) {
+        var randomColor = generateRandomColor();
+        var colorBlock = document.createElement('div');
+        colorBlock.style.backgroundColor = randomColor;
+        colorBlock.style.width = '50px';
+        colorBlock.style.height = '50px';
+        colorBlock.style.display = 'inline-block';
+        randomColors.appendChild(colorBlock);
+
+        randomColorBlocks.push(colorBlock);
+    }
+}
+
+function updateGrayColors() {
+    grayColors.innerHTML = '';
+    for (let i = 0; i < randomColorBlocks.length; i++) {
+        var colorData = randomColorBlocks[i].style.backgroundColor.match(/\d+/g).map(Number);
+        var srgb = [colorData[0], colorData[1], colorData[2]];
+        var gray = monochrome(srgb, parseFloat(sliderK1.value), parseFloat(sliderK2.value), parseFloat(sliderK3.value));
+        var grayBlock = document.createElement('div');
+        grayBlock.style.backgroundColor = `rgb(${gray[0]}, ${gray[1]}, ${gray[2]})`;
+        grayBlock.style.width = '50px';
+        grayBlock.style.height = '50px';
+        grayBlock.style.display = 'inline-block';
+        grayColors.appendChild(grayBlock);
+    }
+}
+
+sliderK1.oninput = function() {
+    updateMonoChrome();
+    updateGrayColors();
+};
+sliderK2.oninput = function() {
+    updateMonoChrome();
+    updateGrayColors();
+};
+sliderK3.oninput = function() {
+    updateMonoChrome();
+    updateGrayColors();
+};
+
 updateMonoChrome();
+generateColorBlocks();
+updateGrayColors();
