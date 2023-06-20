@@ -130,15 +130,16 @@ function updateGrayColors() {
     }
 }
 
+// Update monochrome bars on sliders change
 sliderK1.oninput = function() {
-    let value1 = parseFloat(sliderK1.value);
+    let value1 = Math.max(0, Math.min(0.1, parseFloat(sliderK1.value)));
     let value2 = parseFloat(sliderK2.value);
     let value3 = parseFloat(sliderK3.value);
     let total = value1 + value2 + value3;
 
     // Adjust other two sliders value proportional to their current value
-    sliderK2.value = value2 * (1 - value1) / (total - value1);
-    sliderK3.value = value3 * (1 - value1) / (total - value1);
+    sliderK2.value = Math.max(0.5, Math.min(0.8, value2 * (1 - value1) / (total - value1)));
+    sliderK3.value = Math.max(0.1, Math.min(0.5, value3 * (1 - value1) / (total - value1)));
 
     updateMonoChrome();
     updateGrayColors();
@@ -146,13 +147,13 @@ sliderK1.oninput = function() {
 
 sliderK2.oninput = function() {
     let value1 = parseFloat(sliderK1.value);
-    let value2 = parseFloat(sliderK2.value);
+    let value2 = Math.max(0.5, Math.min(0.8, parseFloat(sliderK2.value)));
     let value3 = parseFloat(sliderK3.value);
     let total = value1 + value2 + value3;
 
     // Adjust other two sliders value proportional to their current value
-    sliderK1.value = value1 * (1 - value2) / (total - value2);
-    sliderK3.value = value3 * (1 - value2) / (total - value2);
+    sliderK1.value = Math.max(0, Math.min(0.1, value1 * (1 - value2) / (total - value2)));
+    sliderK3.value = Math.max(0.1, Math.min(0.5, value3 * (1 - value2) / (total - value2)));
 
     updateMonoChrome();
     updateGrayColors();
@@ -161,12 +162,12 @@ sliderK2.oninput = function() {
 sliderK3.oninput = function() {
     let value1 = parseFloat(sliderK1.value);
     let value2 = parseFloat(sliderK2.value);
-    let value3 = parseFloat(sliderK3.value);
+    let value3 = Math.max(0.1, Math.min(0.5, parseFloat(sliderK3.value)));
     let total = value1 + value2 + value3;
 
     // Adjust other two sliders value proportional to their current value
-    sliderK1.value = value1 * (1 - value3) / (total - value3);
-    sliderK2.value = value2 * (1 - value3) / (total - value3);
+    sliderK1.value = Math.max(0, Math.min(0.1, value1 * (1 - value3) / (total - value3)));
+    sliderK2.value = Math.max(0.5, Math.min(0.8, value2 * (1 - value3) / (total - value3)));
 
     updateMonoChrome();
     updateGrayColors();
@@ -175,4 +176,3 @@ sliderK3.oninput = function() {
 updateMonoChrome();
 generateColorBlocks();
 updateGrayColors();
-
